@@ -72,7 +72,7 @@ class MultiSelectComboBox extends PolymerElement {
   static get properties() {
     return {
       items: {
-        type: Object,
+        type: Array,
         value: () => []
       },
       selectedItems: {
