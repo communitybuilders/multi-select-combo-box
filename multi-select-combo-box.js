@@ -96,9 +96,19 @@ class MultiSelectComboBox extends PolymerElement {
     ]
   }
 
+  removeItem(item) {
+    this.splice('selectedItems', this.selectedItems.indexOf(item), 1);
+    this.push('items', item);
+  }
+
+  addItem(item) {
+    this.push('selectedItems', item);
+    this.splice('items', this.items.indexOf(item), 1);
+  }
+
   _cbValueChanged(cbValue) {
     if (cbValue) {
-      var selectedItem = this.items.find(item => {
+      const selectedItem = this.items.find(item => {
         if (this.valueField != null && this.valueField !== '') {
           if (item[this.valueField] != null) {
             return item[this.valueField] == cbValue;
@@ -106,8 +116,8 @@ class MultiSelectComboBox extends PolymerElement {
         }
         return item == cbValue;
       });
-      this.push('selectedItems', selectedItem);
-      this.splice('items', this.items.indexOf(selectedItem), 1);
+
+      this.addItem(selectedItem);
     }
 
     this._cbValue = '';
@@ -117,18 +127,13 @@ class MultiSelectComboBox extends PolymerElement {
   }
 
   _onTokenClick(e) {
-    this._removeSelected(e.model.item);
+    this.removeItem(e.model.item);
     e.stopPropagation();
-  }
-
-  _removeSelected(item) {
-    this.splice('selectedItems', this.selectedItems.indexOf(item), 1);
-    this.push('items', item);
   }
 
   _onKeyDown(e) {
     if (e.keyCode === 8 && this.selectedItems.length && this.$.tf.value === '') {
-      this._removeSelected(this.selectedItems[this.selectedItems.length - 1]);
+      this.removeItem(this.selectedItems[this.selectedItems.length - 1]);
     }
   }
 
