@@ -1,6 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
-import '@vaadin/vaadin-text-field/vaadin-text-field.js';
-import '@vaadin/vaadin-combo-box/vaadin-combo-box-light.js';
+import '@vaadin/vaadin-text-field/theme/material/vaadin-text-field.js';
+import '@vaadin/vaadin-combo-box/theme/material/vaadin-combo-box-light.js';
 import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/iron-icons/iron-icons.js';
 
