@@ -55,9 +55,9 @@ class MultiSelectComboBox extends PolymerElement {
 
     <vaadin-combo-box-light id="cb" items="[[items]]" value="{{_cbValue}}" item-value-path="[[valueField]]" item-label-path="[[displayField]]">
       <template>[[_getItemDisplayText(item)]]</template>
-      <vaadin-text-field on-keydown="_onKeyDown" label="[[label]]" id="tf">
+      <vaadin-text-field on-keydown="_onKeyDown" label="[[label]]" id="tf" on-change="__checkValue" on-blur="__checkValue">
         <div slot="prefix" id="tokens">
-          <template is="dom-repeat" items="[[selectedItems]]">
+          <template is="dom-repeat" items="[[value]]">
             <div class="token" on-click="_onTokenClick">[[_getItemDisplayText(item)]]
               <iron-icon icon="icons:close"></iron-icon>
             </div>
@@ -75,7 +75,7 @@ class MultiSelectComboBox extends PolymerElement {
         type: Array,
         value: () => []
       },
-      selectedItems: {
+      value: {
         value: () => [],
         notify: true
       },
@@ -92,17 +92,24 @@ class MultiSelectComboBox extends PolymerElement {
 
   static get observers() {
     return [
-      '_cbValueChanged(_cbValue)'
+      '_cbValueChanged(_cbValue)',
+      '__checkValue(value.length)'
     ]
   }
 
+  __checkValue(){
+    this.$.tf.hasValue = this.value.length > 0;
+  }
+
   removeItem(item) {
-    this.splice('selectedItems', this.selectedItems.indexOf(item), 1);
+    this.splice('value', this.value.indexOf(item), 1);
+    this.$.tf.hasValue = this.value.length > 0;
     this.push('items', item);
   }
 
   addItem(item) {
-    this.push('selectedItems', item);
+    this.push('value', item);
+    this.$.tf.hasValue = this.value.length > 0;
     this.splice('items', this.items.indexOf(item), 1);
   }
 
@@ -122,6 +129,11 @@ class MultiSelectComboBox extends PolymerElement {
 
     this._cbValue = '';
 
+    requestAnimationFrame(() => {
+      // added to make sure clicks dont cause this
+      this.$.tf.clear();
+    });
+
     // TODO: This shouldn't be needed!
     setTimeout(() => this.$.cb.$.overlay._selectedItem = '');
   }
@@ -132,9 +144,10 @@ class MultiSelectComboBox extends PolymerElement {
   }
 
   _onKeyDown(e) {
-    if (e.keyCode === 8 && this.selectedItems.length && this.$.tf.value === '') {
-      this.removeItem(this.selectedItems[this.selectedItems.length - 1]);
+    if (e.keyCode === 8 && this.value.length && this.$.tf.value === '') {
+      this.removeItem(this.value[this.value.length - 1]);
     }
+    this.$.tf.hasValue = this.value.length > 0;
   }
 
   _getItemDisplayText(item) {
