@@ -14,7 +14,7 @@
     "@polymer/iron-icon": "^3.0.0-pre.18",
     "@polymer/iron-icons": "^3.0.0-pre.18",
     "@polymer/polymer": "^3.0.0",
-    "@vaadin/vaadin-combo-box": "^4.2.0",
+    "@vaadin/vaadin-combo-box": "^5.0.9",
     "@vaadin/vaadin-text-field": "^2.1.5"
   },
   "devDependencies": {
