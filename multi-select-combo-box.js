@@ -76,6 +76,7 @@ class MultiSelectComboBox extends PolymerElement {
         value: () => []
       },
       value: {
+        type: Array,
         value: () => [],
         notify: true
       },
