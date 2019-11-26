@@ -1,7 +1,7 @@
 {
   "description": "Multi select combo box based on vaadin-combo-box component",
   "name": "@cbar/multi-select-combo-box",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",
