@@ -87,6 +87,11 @@ class MultiSelectComboBox extends PolymerElement {
       },
       valueField: {
         type: String
+      },
+      name: {
+        type: String,
+        value: "",
+        reflectToAttribute: true
       }
     }
   }
